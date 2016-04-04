@@ -77,3 +77,41 @@ This endpoint retrieves a specific destination.
 Parameter | Description
 --------- | -----------
 authorization | The authorization ID of the authorization to retrieve
+
+## Create an Authorization
+
+```shell
+curl -X "POST" "http://api.simplevisa.com/v1/authorizations"
+  -H "Authorization: my-api-key"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Fluffums",
+    "breed": "calico",
+    "fluffiness": 6,
+    "cuteness": 7
+  }
+]
+```
+
+This endpoint creates an authorization supported by SimpleVisa.
+
+### HTTP Request
+
+`GET http://api.simplevisa.com/v1/authorizations`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+include_cats | false | If set to true, the result will also include cats.
+available | true | If set to false, the result will include destinations that have already been adopted.
+
+<aside class="success">
+Remember — don't forget to authenticate your api call!
+</aside>
