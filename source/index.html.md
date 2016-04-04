@@ -11,6 +11,7 @@ toc_footers:
 includes:
   - authentication
   - destinations
+  - authorizations
   - errors
 
 search: true
