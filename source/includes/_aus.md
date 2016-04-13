@@ -2,7 +2,11 @@
 
 ## eVisitor
 
+### Get eVisitor Authorizations
+
 ## ETA
+
+### Get ETA Authorizations
 
 ## Get All Authorizations
 
