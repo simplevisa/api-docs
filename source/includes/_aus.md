@@ -1,9 +1,13 @@
-# USA
+# Australia
+
+## eVisitor
+
+## ETA
 
 ## Get All Authorizations
 
 ```shell
-curl "https://api.simplevisa.com/v1/{project_id}/usa/vwp"
+curl "http://api.simplevisa.com/v1/authorizations"
   -H "Authorization: my-api-key"
 ```
 
