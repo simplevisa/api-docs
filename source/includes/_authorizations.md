@@ -76,6 +76,7 @@ This endpoint retrieves a specific destination.
 
 Parameter | Description
 --------- | -----------
+<<<<<<< HEAD
 authorization | The authorization ID of the authorization to retrieve
 
 ## Create an Authorization
@@ -115,3 +116,6 @@ available | true | If set to false, the result will include destinations that ha
 <aside class="success">
 Remember — don't forget to authenticate your api call!
 </aside>
+=======
+authorization | The authorization ID of the authorization to retrieve
+>>>>>>> parent of f31aa9b... add POST authorization
