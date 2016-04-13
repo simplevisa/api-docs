@@ -1,4 +1,4 @@
-# Authorizations
+# Turkey
 
 ## Get All Authorizations
 

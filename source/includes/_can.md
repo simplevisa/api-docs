@@ -1,4 +1,4 @@
-# Authorizations
+# Canada
 
 ## Get All Authorizations
 
