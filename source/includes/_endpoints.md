@@ -2,6 +2,8 @@
 
 ## Get supported programs
 
+> To check supported programs, use this code:
+
 ```shell
 curl -X "GET" "http://api.simplevisa.com/v1/programs"
   -H "Authorization: my-api-key"
@@ -62,6 +64,22 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs"
 
 ## Get program details
 
+> To get a specific program's details , use this code:
+
+```shell
+curl -X "GET" "http://api.simplevisa.com/v1/programs/:program_id" \
+	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo="
+```
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+
+  }
+]
+```
+
 ### HTTP Request
 `GET /v1/programs/:program_id`
 
@@ -115,7 +133,7 @@ curl -X "POST" "http://api.simplevisa.com/v1/customers/:customer_id/application_
 
 Parameter     | Description
 ------------- | -----------------------------------------------------
-nationalities | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's nationalities, separated by a comma.
+nationalities | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's nationalities, separated by a comma if multiple nationalities exists.
 destination | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's destination country.
 
 ## Prepare an application
@@ -127,14 +145,55 @@ destination | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_
 
 Parameter     | Description
 ------------- | -----------------------------------------------------
-authorization | The authorization ID of the authorization to retrieve
+quote_id | The ID of a previously generated delivery quote. Optional, but recommended. Example: "aqt_KSsT9zJdfV3P9k"
+manifest | A detailed payload of the application to be processed. See [program details](#get-program-details).
+manifest_reference | Optional reference that identifies the manifest. Example: "Customer #690"
 
 ## List applications
+> you can list all your applications by using this code:
+
+```shell
+curl -X "GET" "http://api.simplevisa.com/v1/customers/:customer_id/applications" \
+	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo="
+```
+
+> This will result in a response structured like this:
+
+```json
+[
+  {
+
+  }
+]
+```
+List all applications for a customer.
 
 ### HTTP Request
 `GET /v1/customers/:customer_id/applications`
 
 ## Import an application
+
+> Import an application like this:
+
+```shell
+curl -X "POST" "http://api.simplevisa.com/v1/programs/usa-esta" \
+	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo=" \
+	-H "Content-Type: application/x-www-form-urlencoded" \
+    --data-urlencode "program_id=usa-vwp"
+  	--data-urlencode "manifest={\"data\"=\"data\"}" \
+```
+
+> This will give you the result like this, or an error if the application was not found.
+
+```json
+[
+  {
+    "sdds":"sdds"
+  }
+]
+```
+
+It is possible to import existing applications into your account, if the country's program allows it (see [program's details](#get-program-details) to check ). This endpoint allows you to check for an existing travel authorization or retrieve a lost one on the country's program system.
 
 ### HTTP Request
 `POST /v1/customers/:customer_id/applications/import`
@@ -143,9 +202,12 @@ authorization | The authorization ID of the authorization to retrieve
 
 Parameter     | Description
 ------------- | -----------------------------------------------------
-authorization | The authorization ID of the authorization to retrieve
+program_id | The program Id of the application to import
+manifest | The payload to import a document based on the program's details
 
 ## Get an application
+
+Retrieve updated details about an application.
 
 ### HTTP Request
 `GET /v1/customers/:customer_id/applications/:application_id`

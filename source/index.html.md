@@ -25,9 +25,8 @@ Welcome to the SimpleVisa API! You can use our API to access SimpleVisa API endp
 
 To get started using the SimpleVisa API:
 
-- Sign up for a developer account.
-- Locate your customer ID and test API key in the developer dashboard.
-- Check out a few tutorials on how to use the API: [cURL](http://), [Postman](http://).
+- Sign up for a [developer account](http://simplevisa.com/developers).
+- Locate your `customer ID` and `test API key` in the developer dashboard.
 
 ## What can the API do?
 
@@ -35,9 +34,9 @@ You can use the SimpleVisa API to create travel authorizations for supported des
 
 Here is the flow of events that developers most commonly follow when using our API:
 
-- To see if an authorization is possible, request a [authorization quote](http://). This endpoint takes in two countries and returns a fee, ETA, and other information about a potential authorization.
-- After you have evaluated whether the quoted price and authorization estimate meets your needs, you can [create an authorization](http://).
-- While an authorization is in progress, you can track its status in real-time in the developer dashboard, by [polling the API](http://), or with [webhooks](http://).
+- To see if an authorization is possible, request an [application quote](#get-requirements-and-quote). This endpoint takes in two countries and returns a fee, ETA, and other information about a potential authorization.
+- After you have evaluated whether the quoted price and authorization estimate meets your needs, you can [prepare an application](#prepare-an-application).
+- While an authorization is in progress, you can track its status in real-time in the developer dashboard, by polling the API, or with webhooks.
 
 ## Requests
 
@@ -72,20 +71,14 @@ curl "https://api.simplevisa.com/v1"
 
 > Make sure to replace the demo key with your API key.
 
-SimpleVisa uses API keys to allow access to the API. You can register a new SimpleVisa API key at our [developer portal](http://simplevisa.com/developers).
-
-SimpleVisa expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: my-api-key`
-
-<aside class="notice">
-You must replace <code>my-api-key</code> with your personal API key.
-</aside>
-
-The SimpleVisa API requires authentication by [HTTP Basic Auth](http://en.wikipedia.org/wiki/Basic_access_authentication) headers. Your API key should be included as the username. The password should be left empty.
+The SimpleVisa API requires authentication by [HTTP Basic Auth](http://en.wikipedia.org/wiki/Basic_access_authentication) headers. You can register a new SimpleVisa API key at our [developer portal](http://simplevisa.com/developers). Your API key should be included as the username. The password should be left empty.
 
 The actual header that is used will be a base64-encoded string like this:
 
-`Basic Y2YyZjJkNmQtYTMxNC00NGE4LWI2MDAtNTA1M2MwYWYzMTY1Og==`
+`Authorization: Basic Y2YyZjJkNmQtYTMxNC00NGE4LWI2MDAtNTA1M2MwYWYzMTY1Og==`
 
-Most of the [endpoints](http://) provided in the SimpleVisa API are in relation to a specific customer. You'll need to provide your customer id and include it in the URL.
+<aside class="notice">
+You must replace <code>Y2YyZjJkNmQtYTMxNC00NGE4LWI2MDAtNTA1M2MwYWYzMTY1Og==</code> with your own authentication based on your personal API key.
+</aside>
+
+Most of the [endpoints](#endpoints) provided in the SimpleVisa API are in relation to a specific customer. You'll need to provide your **customer id** and include it in the URL.
