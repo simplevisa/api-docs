@@ -58,10 +58,63 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs"
   ...
 ]
 ```
-Get all supported travel authorization programs supported by SimpleVisa. They can be of different type: Visa Waivers, Electronic Visas, Visas on Arrival, etc.
+Get all supported travel authorization programs supported by SimpleVisa. One country can have mulitple programs available depending on preference or traveler's nationality. They can also be of different type: Visa Waivers, Electronic Visas, Visas on Arrival, etc.
 
 ### HTTP Request
 `GET /v1/programs`
+
+## Get requirements and quote
+
+```shell
+curl -X "POST" "http://api.simplevisa.com/v1/customers/:customer_id/application_quotes" \
+	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo=" \
+	-H "Content-Type: application/x-www-form-urlencoded" \
+	--data-urlencode "destination=USA" \
+	--data-urlencode "nationalities=FRA,DEU"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "kind": "application_quote",
+    "id": "aqt_qUdje83jhdk",
+    "created": "2014-04-13T10:04:03Z",
+    "expires": "2014-04-13T10:09:03Z",
+    "program": "usa-vwp",
+    "main_nationality_used": "FRA",
+    "fee": 1400,
+    "currency": "usd",
+    "credits": 1820,
+    "processing_eta": "2014-04-13T10:12:03Z",
+    "duration": 3
+  },
+  {
+    "kind": "application_quote",
+    "id": "aqt_qUdje83hfyt",
+    "created": "2014-04-13T10:04:03Z",
+    "expires": "2014-04-13T10:09:03Z",
+    "program": "usa-vwp",
+    "main_nationality_used": "DEU",
+    "fee": 1400,
+    "currency": "usd",
+    "credits": 1820,
+    "processing_eta": "2014-04-13T10:12:03Z",
+    "duration": 3
+  }
+]
+```
+
+### HTTP Request
+`POST /v1/customers/:customer_id/application_quotes`
+
+### Query Parameters
+
+Parameter     | Description
+------------- | -----------------------------------------------------
+nationalities | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's nationalities, separated by a comma if multiple nationalities exists.
+destination | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's destination country.
 
 ## Get program details
 
@@ -130,72 +183,6 @@ Parameter     | Description
 ------------- | -----------------------------------------------------
 nationality | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's main nationality.
 
-## Get requirements and quote
-
-```shell
-curl -X "POST" "http://api.simplevisa.com/v1/customers/:customer_id/application_quotes" \
-	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo=" \
-	-H "Content-Type: application/x-www-form-urlencoded" \
-	--data-urlencode "destination=USA" \
-	--data-urlencode "nationalities=FRA,DEU"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "kind": "application_quote",
-    "id": "aqt_qUdje83jhdk",
-    "created": "2014-04-13T10:04:03Z",
-    "expires": "2014-04-13T10:09:03Z",
-    "program": "usa-vwp",
-    "main_nationality_used": "FRA",
-    "fee": 1400,
-    "currency": "usd",
-    "credits": 1820,
-    "processing_eta": "2014-04-13T10:12:03Z",
-    "duration": 3
-  },
-  {
-    "kind": "application_quote",
-    "id": "aqt_qUdje83hfyt",
-    "created": "2014-04-13T10:04:03Z",
-    "expires": "2014-04-13T10:09:03Z",
-    "program": "usa-vwp",
-    "main_nationality_used": "DEU",
-    "fee": 1400,
-    "currency": "usd",
-    "credits": 1820,
-    "processing_eta": "2014-04-13T10:12:03Z",
-    "duration": 3
-  }
-]
-```
-
-### HTTP Request
-`POST /v1/customers/:customer_id/application_quotes`
-
-### Query Parameters
-
-Parameter     | Description
-------------- | -----------------------------------------------------
-nationalities | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's nationalities, separated by a comma if multiple nationalities exists.
-destination | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's destination country.
-
-## Prepare an application
-
-### HTTP Request
-`POST /v1/customers/:customer_id/applications`
-
-### Query Parameters
-
-Parameter     | Description
-------------- | -----------------------------------------------------
-quote_id | The ID of a previously generated delivery quote. Optional, but recommended. Example: "aqt_KSsT9zJdfV3P9k"
-manifest | A detailed payload of the application to be processed. See [program details](#get-program-details).
-manifest_reference | Optional reference that identifies the manifest. Example: "Customer #690"
-
 ## List applications
 > you can list all your applications by using this code:
 
@@ -215,8 +202,23 @@ curl -X "GET" "http://api.simplevisa.com/v1/customers/:customer_id/applications"
 ```
 List all applications for a customer.
 
+pagination
+
 ### HTTP Request
 `GET /v1/customers/:customer_id/applications`
+
+## Prepare an application
+
+### HTTP Request
+`POST /v1/customers/:customer_id/applications`
+
+### Query Parameters
+
+Parameter     | Description
+------------- | -----------------------------------------------------
+quote_id | The ID of a previously generated delivery quote. Optional, but recommended. Example: "aqt_KSsT9zJdfV3P9k"
+manifest | A detailed payload of the application to be processed. See [program details](#get-program-details).
+manifest_reference | Optional reference that identifies the manifest. Example: "Customer #690"
 
 ## Import an application
 
