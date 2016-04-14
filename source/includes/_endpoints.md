@@ -25,7 +25,7 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs"
         "properties": {
           "name": "VWP",
           "id": "usa-vwp",
-          "type": "VisaWaiver"
+          "kind": "VisaWaiver"
         }
       }
     ]
@@ -42,7 +42,7 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs"
         "properties": {
           "name": "eVisitors",
           "id": "aus-evisitors",
-          "type": "ElectronicVisa"
+          "kind": "ElectronicVisa"
         }
       },
       {
@@ -50,7 +50,7 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs"
         "properties": {
           "name": "ETA",
           "id": "aus-eta",
-          "type": "ElectronicVisa"
+          "kind": "ElectronicVisa"
         }
       }
     ]
@@ -58,6 +58,7 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs"
   ...
 ]
 ```
+Get all supported travel authorization programs supported by SimpleVisa. They can be of different type: Visa Waivers, Electronic Visas, Visas on Arrival, etc.
 
 ### HTTP Request
 `GET /v1/programs`
@@ -67,7 +68,7 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs"
 > To get a specific program's details , use this code:
 
 ```shell
-curl -X "GET" "http://api.simplevisa.com/v1/programs/:program_id" \
+curl -X "GET" "http://api.simplevisa.com/v1/programs/:program_id?nationality=FRA" \
 	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo="
 ```
 > The above command returns JSON structured like this:
@@ -75,13 +76,59 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs/:program_id" \
 ```json
 [
   {
+    "kind": "program_details",
+    "program": "usa-vwp",
+    "nationality":"FRA",
+    "details": {
+      "eligible":true,
+      "validity":"2 years",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "prepare"
+          },
+          "params" : [
+            {
+              "param_name":"usa-vwp_firstname",
+              "param_description":"First Name",
+              "param_hint":"Traveler's First Name",
+              "validations":[
+                {
+                  "type":"validation",
+                  "validation":"less than 90 characters"
+                },
+                {
+                  "type":"validation",
+                  "validation":"more than 3 characters"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "import"
+          },
+          "params" : []
+        }
+      ]
 
+    }
   }
 ]
 ```
+Get a program's detail to know what's supported (creation, retrieval, check) for each program, and to know what payload (`manifest`) to send when preparing an application.
 
 ### HTTP Request
-`GET /v1/programs/:program_id`
+`GET /v1/programs/:program_id?nationality=:nationality`
+
+### Query Parameters
+
+Parameter     | Description
+------------- | -----------------------------------------------------
+nationality | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code of the traveler's main nationality.
 
 ## Get requirements and quote
 
