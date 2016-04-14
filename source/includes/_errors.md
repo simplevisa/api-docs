@@ -1,18 +1,30 @@
 # Errors
 
-The SimpleVisa API uses the following error codes:
+> Error responses include details about what went wrong.
 
+```json
+{
+  "kind": "error",
+  "code": "invalid_params",
+  "message": "The parameters of your request were invalid.",
+  "params": {
+    "usa-vwp_firstname": "First Name is required.",
+    "usa-vwp_passport": "Passport number must be maximum 9 characters"
+  }
+}
+```
+Error responses include details about what went wrong.
 
-Error Code | Meaning
----------- | -------
-400 | Bad Request -- Your request sucks
-401 | Unauthorized -- Your API key is wrong
-403 | Forbidden -- The endpoint requested is hidden for administrators only
-404 | Not Found -- The specified endpoint could not be found
-405 | Method Not Allowed -- You tried to access a endpoint with an invalid method
-406 | Not Acceptable -- You requested a format that isn't `application/x-www-form-urlencoded`
-410 | Gone -- The endpoint requested has been removed from our servers
-418 | I'm a teapot
-429 | Too Many Requests -- You're requesting too many endpoints! Slow down!
-500 | Internal Server Error -- We had a problem with our server. Try again later.
-503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
+**Error Codes**
+
+This list will likely become more comprehensive as features are implemented.
+
+`invalid_params` - The indicated parameters were missing or invalid.    
+`unknown_destination` - We weren't able to understand the provided destination, or we don't support it yet. This usually indicates the destination code is wrong, or perhaps not exact enough.    
+`request_rate_limit_exceeded` - This API key has made too many requests.    
+`account_suspended`    
+`not_found`    
+`service_unavailable`    
+`application_limit_exceeded` - You have hit the maximum amount of ongoing applications allowed.    
+`customer_limited` - Your account's limits have been exceeded.    
+`agents_busy` - All of our agents are currently busy.    
