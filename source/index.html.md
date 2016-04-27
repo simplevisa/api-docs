@@ -10,14 +10,11 @@ toc_footers:
 
 includes:
   - endpoints
+  - resources
   - errors
 
 search: true
 ---
-
-<aside class="success">
-This documentation is a work in progress.
-</aside>
 
 # Overview
 
@@ -26,7 +23,8 @@ Welcome to the SimpleVisa API! You can use our API to access SimpleVisa API endp
 To get started using the SimpleVisa API:
 
 - Sign up for a [developer account](http://simplevisa.com/developers).
-- Locate your `customer ID` and `test API key` in the developer dashboard.
+- Describe your app or idea in details to get approved for an API key. See [Approval Guidelines](#approval-guidelines)
+- Locate your `project ID` and `API key` in the developer dashboard.
 
 ## What can the API do?
 
@@ -34,8 +32,9 @@ You can use the SimpleVisa API to create travel authorizations for supported des
 
 Here is the flow of events that developers most commonly follow when using our API:
 
-- To see if an authorization is possible, request an [application quote](#get-requirements-and-quote). This endpoint takes in two countries and returns a fee, ETA, and other information about a potential authorization.
-- After you have evaluated whether the quoted price and authorization estimate meets your needs, you can [prepare an application](#prepare-an-application).
+- To see if an authorization is possible, request an [application quote & eligibility](#get-requirements-and-quote). This endpoint takes in a destination country and one or more citizenship country and returns a fee, ETA, and other information about a potential authorization.
+- After you have evaluated whether the quoted price and authorization estimate meets your needs, you need to get the [program details](#get-program-details)
+- You can then [prepare an application](#prepare-an-application) with the details obtained in previous API call.
 - While an authorization is in progress, you can track its status in real-time in the developer dashboard, by polling the API, or with webhooks.
 
 ## Requests
@@ -52,12 +51,12 @@ Our API is REST-based. This means:
 
 POST data should be encoded as standard `application/x-www-form-urlencoded`.
 
-## Versioning
+<!-- ## Versioning
 
 Versioning allows us to provide developers a consistent experience. We provide two levels of versioning:
 
 - Resource: All endpoints are prefixed with a version such as `/v1`. This version refers to the overall layout of the endpoints and response standards.
-- Client: Developers can ensure consistent fields and formats by specifying a version as a HTTP header. `X-Simplevisa-Version` header such as `X-Simplevisa-Version: 20160403`
+- Client: Developers can ensure consistent fields and formats by specifying a version as a HTTP header. `X-Simplevisa-Version` header such as `X-Simplevisa-Version: 20160403` -->
 
 ## Authentication
 
@@ -66,19 +65,19 @@ Versioning allows us to provide developers a consistent experience. We provide t
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "https://api.simplevisa.com/v1"
-  -H "Authorization: Basic ZmdoZ2pmamhnZjoqKioqKiBIaWRkZW4gY3JlZGVudGlhbHMgKioqKio="
+  -H "x-api-key: bkayZOMvuy8aZOhIgxq94K9Oe7Y70Hw55"
 ```
 
 > Make sure to replace the demo key with your API key.
 
-The SimpleVisa API requires authentication by [HTTP Basic Auth](http://en.wikipedia.org/wiki/Basic_access_authentication) headers. You can register a new SimpleVisa API key at our [developer portal](http://simplevisa.com/developers). Your API key should be included as the username. The password should be left empty.
+The SimpleVisa API requires authentication by API key. You can register a new SimpleVisa API key at our [developer portal](http://simplevisa.com/developers).
 
 The actual header that is used will be a base64-encoded string like this:
 
-`Authorization: Basic Y2YyZjJkNmQtYTMxNC00NGE4LWI2MDAtNTA1M2MwYWYzMTY1Og==`
+`x-api-key: bkayZOMvuy8aZOhIgxq94K9Oe7Y70Hw55`
 
 <aside class="notice">
-You must replace <code>Y2YyZjJkNmQtYTMxNC00NGE4LWI2MDAtNTA1M2MwYWYzMTY1Og==</code> with your own authentication based on your personal API key.
+You must replace <code>bkayZOMvuy8aZOhIgxq94K9Oe7Y70Hw55</code> with your own personal API key.
 </aside>
 
-Most of the [endpoints](#endpoints) provided in the SimpleVisa API are in relation to a specific customer. You'll need to provide your **customer id** and include it in the URL.
+Most of the [endpoints](#endpoints) provided in the SimpleVisa API are in relation to a specific project. You'll need to provide your **project id** and include it in the URL.

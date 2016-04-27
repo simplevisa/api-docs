@@ -5,8 +5,8 @@
 > To check supported programs, use this code:
 
 ```shell
-curl -X "GET" "http://api.simplevisa.com/v1/programs"
-  -H "Authorization: my-api-key"
+curl -X "GET" "http://api.simplevisa.com/programs"
+  -H "x-api-key: bkayZOMvuy8aZOhIgxq94K9Oe7Y70Hw55"
 ```
 
 > The above command returns JSON structured like this:
@@ -61,13 +61,13 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs"
 Get all supported travel authorization programs supported by SimpleVisa. One country can have mulitple programs available depending on preference or traveler's nationality. They can also be of different type: Visa Waivers, Electronic Visas, Visas on Arrival, etc.
 
 ### HTTP Request
-`GET /v1/programs`
+`GET /programs`
 
 ## Get requirements and quote
 
 ```shell
-curl -X "POST" "http://api.simplevisa.com/v1/customers/:customer_id/application_quotes" \
-	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo=" \
+curl -X "POST" "http://api.simplevisa.com/projects/:project_id/application_quotes" \
+	-H "x-api-key: bkayZOMvuy8aZOhIgxq94K9Oe7Y70Hw55" \
 	-H "Content-Type: application/x-www-form-urlencoded" \
 	--data-urlencode "destination=USA" \
 	--data-urlencode "nationalities=FRA,DEU"
@@ -107,7 +107,7 @@ curl -X "POST" "http://api.simplevisa.com/v1/customers/:customer_id/application_
 ```
 
 ### HTTP Request
-`POST /v1/customers/:customer_id/application_quotes`
+`POST /projects/:project_id/application_quotes`
 
 ### Query Parameters
 
@@ -121,8 +121,8 @@ destination | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_
 > To get a specific program's details , use this code:
 
 ```shell
-curl -X "GET" "http://api.simplevisa.com/v1/programs/:program_id?nationality=FRA" \
-	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo="
+curl -X "GET" "http://api.simplevisa.com/programs/:program_id?nationality=FRA" \
+	-H "x-api-key: bkayZOMvuy8aZOhIgxq94K9Oe7Y70Hw55"
 ```
 > The above command returns JSON structured like this:
 
@@ -175,7 +175,7 @@ curl -X "GET" "http://api.simplevisa.com/v1/programs/:program_id?nationality=FRA
 Get a program's detail to know what's supported (creation, retrieval, check) for each program, and to know what payload (`manifest`) to send when preparing an application.
 
 ### HTTP Request
-`GET /v1/programs/:program_id?nationality=:nationality`
+`GET /programs/:program_id?nationality=:nationality`
 
 ### Query Parameters
 
@@ -187,30 +187,36 @@ nationality | The [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_
 > you can list all your applications by using this code:
 
 ```shell
-curl -X "GET" "http://api.simplevisa.com/v1/customers/:customer_id/applications" \
-	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo="
+curl -X "GET" "http://api.simplevisa.com/projects/:project_id/applications" \
+	-H "x-api-key: bkayZOMvuy8aZOhIgxq94K9Oe7Y70Hw55"
 ```
 
 > This will result in a response structured like this:
 
 ```json
-[
-  {
-
-  }
-]
+{
+    "code": 200,
+    "status": "ok",
+    "messages": [],
+    "result": {
+        "user": {
+            "id": 123,
+            "name": "test"
+        }
+    }
+}
 ```
 List all applications for a customer.
 
 pagination
 
 ### HTTP Request
-`GET /v1/customers/:customer_id/applications`
+`GET /projects/:project_id/applications`
 
 ## Prepare an application
 
 ### HTTP Request
-`POST /v1/customers/:customer_id/applications`
+`POST /projects/:project_id/applications`
 
 ### Query Parameters
 
@@ -225,8 +231,8 @@ manifest_reference | Optional reference that identifies the manifest. Example: "
 > Import an application like this:
 
 ```shell
-curl -X "POST" "http://api.simplevisa.com/v1/programs/usa-esta" \
-	-H "Authorization: Basic YXNkZmFzZmRhc2RmYWRzYWZzYXNmZDo=" \
+curl -X "POST" "http://api.simplevisa.com/programs/usa-esta" \
+	-H "x-api-key: bkayZOMvuy8aZOhIgxq94K9Oe7Y70Hw55" \
 	-H "Content-Type: application/x-www-form-urlencoded" \
     --data-urlencode "program_id=usa-vwp"
   	--data-urlencode "manifest={\"data\"=\"data\"}" \
@@ -235,17 +241,23 @@ curl -X "POST" "http://api.simplevisa.com/v1/programs/usa-esta" \
 > This will give you the result like this, or an error if the application was not found.
 
 ```json
-[
-  {
-    "sdds":"sdds"
-  }
-]
+{
+    "code": 200,
+    "status": "ok",
+    "messages": [],
+    "result": {
+        "user": {
+            "id": 123,
+            "name": "test"
+        }
+    }
+}
 ```
 
 It is possible to import existing applications into your account, if the country's program allows it (see [program's details](#get-program-details) to check ). This endpoint allows you to check for an existing travel authorization or retrieve a lost one on the country's program system.
 
 ### HTTP Request
-`POST /v1/customers/:customer_id/applications/import`
+`POST /projects/:project_id/applications/import`
 
 ### Query Parameters
 
@@ -259,4 +271,4 @@ manifest | The payload to import a document based on the program's details
 Retrieve updated details about an application.
 
 ### HTTP Request
-`GET /v1/customers/:customer_id/applications/:application_id`
+`GET /projects/:project_id/applications/:application_id`
