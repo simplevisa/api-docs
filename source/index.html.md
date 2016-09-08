@@ -10,8 +10,8 @@ toc_footers:
 
 includes:
   - endpoints
-  - resources
   - errors
+  - resources
 
 search: true
 ---

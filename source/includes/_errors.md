@@ -3,14 +3,24 @@
 > Error responses include details about what went wrong.
 
 ```json
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/vnd.api+json
+
 {
-  "kind": "error",
-  "code": "invalid_params",
-  "message": "The parameters of your request were invalid.",
-  "params": {
-    "usa-vwp_firstname": "First Name is required.",
-    "usa-vwp_passport": "Passport number must be maximum 9 characters"
-  }
+  "errors": [
+    {
+      "status": "400",
+      "source": { "pointer": "/data/attributes/first-name" },
+      "title": "Invalid Attribute",
+      "detail": "First name must contain at least three characters."
+    },
+    {
+      "status": "400",
+      "source": { "pointer": "/data/attributes/first-name" },
+      "title": "Invalid Attribute",
+      "detail": "First name must contain an emoji."
+    }
+  ]
 }
 ```
 Error responses include details about what went wrong.

@@ -86,7 +86,7 @@ curl -X "POST" "http://api.simplevisa.com/projects/:project_id/application_quote
     "main_nationality_used": "FRA",
     "fee": 1400,
     "currency": "usd",
-    "credits": 1820,
+    "credits": 14,
     "processing_eta": "2014-04-13T10:12:03Z",
     "duration": 3
   },
@@ -99,7 +99,7 @@ curl -X "POST" "http://api.simplevisa.com/projects/:project_id/application_quote
     "main_nationality_used": "DEU",
     "fee": 1400,
     "currency": "usd",
-    "credits": 1820,
+    "credits": 14,
     "processing_eta": "2014-04-13T10:12:03Z",
     "duration": 3
   }
